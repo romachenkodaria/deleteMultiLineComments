@@ -2,7 +2,7 @@
 
 void CodeString::extractCommentsAndStrings() {
     // Регулярные выражения для поиска комментариев и строковых литералов.
-    std::regex singleLineCommentRegex("(.*)//");
+    std::regex singleLineCommentRegex("//(.*)");
     std::regex multiLineCommentStartRegex("/\\*");
     std::regex multiLineCommentEndRegex("\\*/");
     std::regex stringLiteralRegex("\"(.*?)\"");
@@ -10,7 +10,7 @@ void CodeString::extractCommentsAndStrings() {
     // Поиск и извлечение однострочных комментариев.
     std::smatch match;
     if (std::regex_search(text, match, singleLineCommentRegex)) {
-        singleLineCommentPosition = static_cast<int>(match.position(1));
+        singleLineCommentPosition = static_cast<int>(match.position());
     }
 
     // Поиск и извлечение начала многострочных комментариев.
@@ -25,6 +25,7 @@ void CodeString::extractCommentsAndStrings() {
 
     // Поиск и извлечение строковых литералов.
     if (std::regex_search(text, match, stringLiteralRegex)) {
-        stringLiteralPosition = static_cast<int>(match.position(1));
+        stringStartLiteralPosition = static_cast<int>(match.position());
+        stringEndLiteralPosition = static_cast<int>(match.position() + match.length() - 1);
     }
 }
