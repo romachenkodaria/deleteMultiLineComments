@@ -139,7 +139,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="CodeString.cpp" />
     <ClCompile Include="deleteMultiLineComments.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="CodeString.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
