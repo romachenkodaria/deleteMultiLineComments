@@ -12,7 +12,7 @@ public:
         }
     }
 
-    // TODO: функция определения начала/конца комментария
+
     int commentOpeningPos();
 
     int commentClosingPos();
