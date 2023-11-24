@@ -40,3 +40,11 @@ void Code::removeComment(int start, int end)
     codeStrings[end] = CodeString(codeStrings[end].text);
 }
 
+void Code::removeMultiLineComments()
+{
+    while (commentOpeningPos() != -1)
+    {
+        removeComment(commentOpeningPos(), commentClosingPos());
+    }
+}
+

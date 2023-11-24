@@ -20,5 +20,6 @@ public:
 
     void removeComment(int start, int end);
 
+    void removeMultiLineComments();
 };
 
