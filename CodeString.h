@@ -5,7 +5,7 @@
 class CodeString
 {
 public:
-    const std::string text;
+    std::string text;
     int singleLineCommentPosition;
     int multiLineCommentStartPosition;
     int multiLineCommentEndPosition;
