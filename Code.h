@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include <string>
 #include "CodeString.h"
 
 class Code {
@@ -16,6 +17,8 @@ public:
     int commentOpeningPos();
 
     int commentClosingPos();
+
+    void removeComment(int start, int end);
 
 };
 

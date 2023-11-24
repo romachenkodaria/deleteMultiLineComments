@@ -27,3 +27,14 @@ int Code::commentClosingPos()
     return pos;
 }
 
+void Code::removeComment(int start, int end)
+{
+    if (start < end) {
+        codeStrings[start].text.erase(codeStrings[start].multiLineCommentStartPosition);
+        codeStrings[end].text.erase(0, codeStrings[end].multiLineCommentEndPosition + 2);
+        codeStrings.erase(codeStrings.begin() + 1 + start, codeStrings.begin() + end);
+    }
+    else if (start == end)
+        codeStrings[start].text.erase(codeStrings[start].multiLineCommentStartPosition, codeStrings[start].multiLineCommentEndPosition + 2 - codeStrings[start].multiLineCommentStartPosition);
+}
+
