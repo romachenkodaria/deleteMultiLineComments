@@ -1,6 +1,6 @@
 #include "Code.h"
 
-// TODO: функция определения начала/конца комментария
+
 int Code::commentOpeningPos()
 {
     int pos = -1;
@@ -26,3 +26,4 @@ int Code::commentClosingPos()
     }
     return pos;
 }
+
