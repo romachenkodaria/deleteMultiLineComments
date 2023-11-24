@@ -29,3 +29,19 @@ void CodeString::extractCommentsAndStrings() {
         stringEndLiteralPosition = static_cast<int>(match.position() + match.length() - 1);
     }
 }
+
+bool CodeString::containsStartOfMultiLineComment()
+{
+    int minIndex = 256; 
+    if (singleLineCommentPosition != -1) {
+        minIndex = std::min(minIndex, singleLineCommentPosition);
+    }
+    if (multiLineCommentStartPosition != -1) {
+        minIndex = std::min(minIndex, multiLineCommentStartPosition);
+    }
+    if (stringStartLiteralPosition != -1 && stringEndLiteralPosition > multiLineCommentStartPosition) {
+        minIndex = std::min(minIndex, stringStartLiteralPosition);
+    }
+    return (minIndex == multiLineCommentStartPosition);
+}
+

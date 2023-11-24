@@ -22,5 +22,8 @@ public:
     } 
 
     void extractCommentsAndStrings();
+
+    bool containsStartOfMultiLineComment();
+
 };
 
