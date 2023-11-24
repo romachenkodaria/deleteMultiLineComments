@@ -45,3 +45,9 @@ bool CodeString::containsStartOfMultiLineComment()
     return (minIndex == multiLineCommentStartPosition);
 }
 
+bool CodeString::containsEndOfMultiLineComment()
+{
+    return multiLineCommentEndPosition != -1;
+}
+
+

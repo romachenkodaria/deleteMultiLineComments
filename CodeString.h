@@ -25,5 +25,6 @@ public:
 
     bool containsStartOfMultiLineComment();
 
+    bool containsEndOfMultiLineComment();
 };
 
