@@ -201,5 +201,81 @@ namespace deleteMultiLineCommentsUnitTests
 			for (int i = 0; i < test.codeStrings.size(); i++)
 				Assert::AreEqual(exp_code[i], test.codeStrings[i].text);
 		}
+		TEST_METHOD(removeComment_noSingleLineComment)
+		{
+			std::vector<std::string> code = {
+			"/* Начало комментария",
+			"   в несколько строк */",
+			"int main() {",
+			"    std::cout << 'Hello, World!' << std::endl;",
+			"    return 0;",
+			"}"
+			};
+			std::vector<std::string> exp_code = {
+				"",
+				"",
+				"int main() {",
+				"    std::cout << 'Hello, World!' << std::endl;",
+				"    return 0;",
+				"}"
+			};
+			Code test(code);
+			test.removeComment(0, 1);
+
+			for (int i = 0; i < test.codeStrings.size(); i++)
+				Assert::AreEqual(exp_code[i], test.codeStrings[i].text);
+		}
+
+		TEST_METHOD(removeComment_singleLineCommentWithMultiLine)
+		{
+			std::vector<std::string> code = {
+				"int main() { // Начало функции",
+				"    std::cout << 'Hello, World!' /* Многострочный комментарий */ << std::endl;",
+				"    return 0; // Завершение функции",
+				"}"
+			};
+			std::vector<std::string> exp_code = {
+				"int main() { // Начало функции",
+				"    std::cout << 'Hello, World!'  << std::endl;",
+				"    return 0; // Завершение функции",
+				"}"
+			};
+			Code test(code);
+			test.removeComment(1, 1);
+
+			for (int i = 0; i < test.codeStrings.size(); i++)
+				Assert::AreEqual(exp_code[i], test.codeStrings[i].text);
+		}
+
+		TEST_METHOD(removeComment_fewMultiLineComments)
+		{
+			std::vector<std::string> code = {
+				"/* Начало комментария",
+				"   в несколько строк */",
+				"int main() {",
+				"    // Вложенный комментарий",
+				"    /* Еще один",
+				"       многострочный комментарий */",
+				"    std::cout << 'Hello, World!' << std::endl;",
+				"    return 0;",
+				"}"
+			};
+			std::vector<std::string> exp_code = {
+				"",
+				"",
+				"int main() {",
+				"    // Вложенный комментарий",
+				"    /* Еще один",
+				"       многострочный комментарий */",
+				"    std::cout << 'Hello, World!' << std::endl;",
+				"    return 0;",
+				"}"
+			};
+			Code test(code);
+			test.removeComment(0, 1);
+
+			for (int i = 0; i < test.codeStrings.size(); i++)
+				Assert::AreEqual(exp_code[i], test.codeStrings[i].text);
+		}
 	};
 }
