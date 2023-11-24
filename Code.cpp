@@ -36,5 +36,7 @@ void Code::removeComment(int start, int end)
     }
     else if (start == end)
         codeStrings[start].text.erase(codeStrings[start].multiLineCommentStartPosition, codeStrings[start].multiLineCommentEndPosition + 2 - codeStrings[start].multiLineCommentStartPosition);
+    codeStrings[start] = CodeString(codeStrings[start].text);
+    codeStrings[end] = CodeString(codeStrings[end].text);
 }
 
