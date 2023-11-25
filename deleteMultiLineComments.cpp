@@ -59,13 +59,6 @@ int main(int argc, char* argv[]) {
 		// Закрытие файла после чтения
 		inputFile.close();
 
-		std::vector<std::string> lines1 = {
-			"This is a line with // a single-line comment",
-			"Another \"line /* \"with a multi-line",
-			"comment /*and a  */string/*  literal \"inside\"",
-			"No comments or strings */here"
-		};
-
 		Code code(lines);
 		code.removeMultiLineComments();
 
