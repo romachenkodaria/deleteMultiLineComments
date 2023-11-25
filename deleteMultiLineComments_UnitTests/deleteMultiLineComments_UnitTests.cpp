@@ -277,5 +277,77 @@ namespace deleteMultiLineCommentsUnitTests
 			for (int i = 0; i < test.codeStrings.size(); i++)
 				Assert::AreEqual(exp_code[i], test.codeStrings[i].text);
 		}
+
+		TEST_METHOD(containsStartOfMultiLineComment_noMultiLineOpener)
+		{
+			std::string str = "std::cout << \"Hello, World!\" << std::endl; // Еще один комментарий";
+			CodeString codeStr(str);
+
+			bool exp_res = false;
+
+			bool real_res = codeStr.containsStartOfMultiLineComment();
+
+			Assert::AreEqual(exp_res, real_res);
+		}
+
+		TEST_METHOD(containsStartOfMultiLineComment_simpleMultiLineOpener)
+		{
+			std::string str = "std::cout << \"Hello, World!\" << std::endl; /* Еще один комментарий */";
+			CodeString codeStr(str);
+
+			bool exp_res = true;
+
+			bool real_res = codeStr.containsStartOfMultiLineComment();
+
+			Assert::AreEqual(exp_res, real_res);
+		}
+
+		TEST_METHOD(containsStartOfMultiLineComment_multiLineOpenerAtStartPos)
+		{
+			std::string str = "/*std::cout << \"Hello, World!\" << std::endl; Еще один комментарий*/";
+			CodeString codeStr(str);
+
+			bool exp_res = true;
+
+			bool real_res = codeStr.containsStartOfMultiLineComment();
+
+			Assert::AreEqual(exp_res, real_res);
+		}
+
+		TEST_METHOD(containsStartOfMultiLineComment_multiLineOpenerAtRandomPos)
+		{
+			std::string str = "std::cout << \"Hello, World!\"/* << std::endl; */ //Еще один комментарий";
+			CodeString codeStr(str);
+
+			bool exp_res = true;
+
+			bool real_res = codeStr.containsStartOfMultiLineComment();
+
+			Assert::AreEqual(exp_res, real_res);
+		}
+
+		TEST_METHOD(containsStartOfMultiLineComment_multiLineOpenerAfterSingleLine)
+		{
+			std::string str = "std::cout << \"Hello, World!\" << //std::endl; /* Еще один комментарий";
+			CodeString codeStr(str);
+
+			bool exp_res = false;
+
+			bool real_res = codeStr.containsStartOfMultiLineComment();
+
+			Assert::AreEqual(exp_res, real_res);
+		}
+
+		TEST_METHOD(containsStartOfMultiLineComment_multiLineOpenerAfterLiteralOpener)
+		{
+			std::string str = "std::cout << \"/*Hello, World!\" << std::endl; ";
+			CodeString codeStr(str);
+
+			bool exp_res = false;
+
+			bool real_res = codeStr.containsStartOfMultiLineComment();
+
+			Assert::AreEqual(exp_res, real_res);
+		}
 	};
 }
