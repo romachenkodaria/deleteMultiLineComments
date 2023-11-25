@@ -349,5 +349,85 @@ namespace deleteMultiLineCommentsUnitTests
 
 			Assert::AreEqual(exp_res, real_res);
 		}
+
+		TEST_METHOD (extractCommentsAndStrings_singleLineComment)
+		{
+			std::string str = "std::cout << \"Hello, World!\" << std::endl; // Еще один комментарий";
+			CodeString codeStr(str);
+
+			int expStart = -1;
+			int expEnd = -1;
+			int expLitStart = 13;
+			int expLitEnd = 27;
+			int expSingle = 43;
+
+			
+
+			Assert::AreEqual(expStart, codeStr.multiLineCommentStartPosition);
+			Assert::AreEqual(expEnd, codeStr.multiLineCommentEndPosition);
+			Assert::AreEqual(expLitStart, codeStr.stringStartLiteralPosition);
+			Assert::AreEqual(expLitEnd, codeStr.stringEndLiteralPosition);
+			Assert::AreEqual(expSingle, codeStr.singleLineCommentPosition);
+		}
+
+		TEST_METHOD(extractCommentsAndStrings_multiLineComment)
+		{
+			std::string str = "std::cout << \"Hello, World!\" << std::endl; /* Еще один комментарий */";
+			CodeString codeStr(str);
+
+			int expStart = 43;
+			int expEnd = 67;
+			int expLitStart = 13;
+			int expLitEnd = 27;
+			int expSingle = -1;
+
+
+
+			Assert::AreEqual(expStart, codeStr.multiLineCommentStartPosition);
+			Assert::AreEqual(expEnd, codeStr.multiLineCommentEndPosition);
+			Assert::AreEqual(expLitStart, codeStr.stringStartLiteralPosition);
+			Assert::AreEqual(expLitEnd, codeStr.stringEndLiteralPosition);
+			Assert::AreEqual(expSingle, codeStr.singleLineCommentPosition);
+		}
+
+		TEST_METHOD(extractCommentsAndStrings_specialSymbolsAtStartPos)
+		{
+			std::string str = "/*std::cout << \"Hello, World!\" << std::endl;  Еще один комментарий */";
+			CodeString codeStr(str);
+
+			int expStart = 0;
+			int expEnd = 67;
+			int expLitStart = 15;
+			int expLitEnd = 29;
+			int expSingle = -1;
+
+
+
+			Assert::AreEqual(expStart, codeStr.multiLineCommentStartPosition);
+			Assert::AreEqual(expEnd, codeStr.multiLineCommentEndPosition);
+			Assert::AreEqual(expLitStart, codeStr.stringStartLiteralPosition);
+			Assert::AreEqual(expLitEnd, codeStr.stringEndLiteralPosition);
+			Assert::AreEqual(expSingle, codeStr.singleLineCommentPosition);
+		}
+
+		TEST_METHOD(extractCommentsAndStrings_specialSymbolsAtRandomPos)
+		{
+			std::string str = "std::cout << \"Hello, World!\" /*<< std::endl;*/ // Еще один комментарий";
+			CodeString codeStr(str);
+
+			int expStart = 29;
+			int expEnd = 44;
+			int expLitStart = 13;
+			int expLitEnd = 27;
+			int expSingle = 47;
+
+
+
+			Assert::AreEqual(expStart, codeStr.multiLineCommentStartPosition);
+			Assert::AreEqual(expEnd, codeStr.multiLineCommentEndPosition);
+			Assert::AreEqual(expLitStart, codeStr.stringStartLiteralPosition);
+			Assert::AreEqual(expLitEnd, codeStr.stringEndLiteralPosition);
+			Assert::AreEqual(expSingle, codeStr.singleLineCommentPosition);
+		}
 	};
 }
